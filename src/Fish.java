@@ -28,11 +28,11 @@ public class Fish {
             if(ypos+height<250){
                 dy = -dy;
             }
-            if(xpos + width>1000){
+            if(xpos + width >1000){
                 dx = -dx;
                 width = -width;
             }
-            if(xpos < 0){
+            if(xpos + width< 0){
                 dx = -dx;
                 width = -width;
             }

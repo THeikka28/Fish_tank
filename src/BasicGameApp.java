@@ -46,39 +46,30 @@ public class BasicGameApp implements Runnable {
     private Fish Fish1;
 
 
+
    // Main method definition
    // This is the code that runs first and automatically
 	public static void main(String[] args) {
-		BasicGameApp ex = new BasicGameApp();   //creates a new instance of the game
-		new Thread(ex).start();                 //creates a threads & starts up the code in the run( ) method  
+		BasicGameApp ex = new BasicGameApp();
+		new Thread(ex).start();
 	}
 
 
-   // Constructor Method
-   // This has the same name as the class
-   // This section is the setup portion of the program
-   // Initialize your variables and construct your program objects here.
 	public BasicGameApp() {
       
       setUpGraphics();
        
       //variable and objects
       //create (construct) the objects needed for the game and load up 
-		Fishpic = Toolkit.getDefaultToolkit().getImage("Fish.jpeg"); //load the picture
-        background = Toolkit.getDefaultToolkit().getImage("background.jpeg"); //load the picture
+		Fishpic = Toolkit.getDefaultToolkit().getImage("Fish.png"); //load the picture
+        background = Toolkit.getDefaultToolkit().getImage("Background2.jpg"); //load the picture
 		Fish1 = new Fish(0,350);
+        Fish1.height = 90;
+        Fish1.width = 150;
 
 
-	}// BasicGameApp()
+	}
 
-   
-//*******************************************************************************
-//User Method Section
-//
-// put your code to do things here.
-
-   // main thread
-   // this is the code that plays the game after you set things up
 	public void run() {
 
       //for the moment we will loop things forever.

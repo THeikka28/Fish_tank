@@ -39,11 +39,15 @@ public class BasicGameApp implements Runnable {
    
 	public BufferStrategy bufferStrategy;
 	public Image Fishpic;
+    public Image boatpic;
     public Image background;
+    public Image octopic;
 
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
     private Fish Fish1;
+    private boat boat1;
+    private octopus octo;
 
 
 
@@ -62,8 +66,12 @@ public class BasicGameApp implements Runnable {
       //variable and objects
       //create (construct) the objects needed for the game and load up 
 		Fishpic = Toolkit.getDefaultToolkit().getImage("Fish.png"); //load the picture
-        background = Toolkit.getDefaultToolkit().getImage("Background2.jpg"); //load the picture
+        boatpic = Toolkit.getDefaultToolkit().getImage("boat.jpeg"); //load the picture
+        octopic = Toolkit.getDefaultToolkit().getImage("Octo.png"); //load the picture
+        background = Toolkit.getDefaultToolkit().getImage("fishback.jpeg"); //load the picture
 		Fish1 = new Fish(0,350);
+        boat1 = new boat(890, 100);
+        octo = new octopus(220,750);
         Fish1.height = 90;
         Fish1.width = 150;
 
@@ -86,6 +94,8 @@ public class BasicGameApp implements Runnable {
 	{
       //calls the move( ) code in the objects
 		Fish1.move();
+        boat1.move();
+        octo.move();
 
 	}
 	
@@ -136,6 +146,8 @@ public class BasicGameApp implements Runnable {
 		g.clearRect(0, 0, WIDTH, HEIGHT);
         g.drawImage(background, 0, 0, WIDTH, HEIGHT, null);
 		g.drawImage(Fishpic, Fish1.xpos, Fish1.ypos, Fish1.width, Fish1.height, null);
+        g.drawImage(boatpic, boat1.xpos, boat1.ypos,boat1.width, boat1.height, null);
+        g.drawImage(octopic, octo.xpos, octo.ypos,octo.width, octo.height, null);
 
 
 		g.dispose();

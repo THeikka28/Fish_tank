@@ -8,11 +8,10 @@ public class Fish {
         public int width;
         public int height;
 
-
         public Fish(int pXpos, int pYpos) {
             xpos = pXpos;
             ypos = pYpos;
-            dx =7;
+            dx =6;
             dy =-2;
             width = 100;
             height = 60;

@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class octopus {
+public class Octopus {
 
 
         public String name;                //holds the name of the hero
@@ -22,15 +22,15 @@ public class octopus {
 
         //This is a SECOND constructor that takes 3 parameters.  This allows us to specify the hero's name and position when we build it.
         // if you put in a String, an int and an int the program will use this constructor instead of the one above.
-        public octopus (int pXpos, int pYpos) {
+        public Octopus (int pXpos, int pYpos) {
             xpos = pXpos;
             ypos = pYpos;
             dx =-2;
             dy =-3;
             width = 60;
-            height = -250;
+            height = -450;
             isAlive = true;
-            hitbox = new Rectangle (xpos, ypos, width, 50);
+            hitbox = new Rectangle (xpos, ypos+height+10, 100, -100);
 
         } // constructor
 
@@ -39,17 +39,15 @@ public class octopus {
             xpos = xpos + dx;
             if (xpos+ width > 1000){
                 dx = -dx;
-                width = -width;
             }
             if (xpos -width < 0){
                 dx = -dx;
-                width = -width;
             }
             height = height + dy;
-            if (height < -700){
+            if (height < -650){
                 dy = -dy;
             }
-            if (height > -250){
+            if (height > -400){
                 dy = -dy;
             }
 

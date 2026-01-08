@@ -1,6 +1,5 @@
 public class Fish {
 
-        public String name;                //holds the name of the hero
         public int xpos;                //the x position
         public int ypos;                //the y position
         public int dx;                    //the speed of the hero in the x direction
@@ -21,7 +20,7 @@ public class Fish {
         public void move() {
             xpos = xpos + dx;
             ypos = ypos + dy;
-            if(ypos>450){
+            if(ypos>400){
                 dy=-dy;
             }
             if(ypos+height<250){

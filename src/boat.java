@@ -1,19 +1,18 @@
+import java.awt.*;
+
 public class boat {
 
-        public String name;                //holds the name of the hero
+
         public int xpos;                //the x position
         public int ypos;                //the y position
         public int dx;                    //the speed of the hero in the x direction
         public int dy;                    //the speed of the hero in the y direction
         public int width;
         public int height;
-        public boolean isAlive;            //a boolean to denote if the hero is alive or dead.
+        public boolean isAlive;
+        public Rectangle hitbox;
 
 
-        // METHOD DEFINITION SECTION
-
-        // Constructor Definition
-        // A constructor builds the object when called and sets variable values.
 
 
         //This is a SECOND constructor that takes 3 parameters.  This allows us to specify the hero's name and position when we build it.
@@ -26,6 +25,7 @@ public class boat {
             width = -180;
             height = 100;
             isAlive = true;
+            hitbox = new Rectangle(xpos, ypos, width, height);
 
         } // constructor
 

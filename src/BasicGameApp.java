@@ -49,6 +49,7 @@ public class BasicGameApp implements Runnable {
     private Fish Fish1;
     private boat boat1;
     private Octopus octo;
+    private Octopus octohead;
 
 
 
@@ -74,6 +75,9 @@ public class BasicGameApp implements Runnable {
 		Fish1 = new Fish(0,350);
         boat1 = new boat(890, 100);
         octo = new Octopus(220,750);
+        octohead = new Octopus (octo.xpos-25, octo.ypos+octo.height+10);
+        octohead.width = 100;
+        octohead.height = 100;
         Fish1.height = 90;
         Fish1.width = 150;
 
@@ -98,11 +102,14 @@ public class BasicGameApp implements Runnable {
 		Fish1.move();
         boat1.move();
         octo.move();
+        octo.height = octo.height + octo.dy;
         crashing();
+        octohead.xpos = octo.xpos-25;
+        octohead.ypos = octo.ypos+octo.height-90;
 
 	}
     public void crashing(){
-        if (boat1.hitbox.intersects(octo.hitbox)){
+        if (boat1.hitbox.intersects(octohead.hitbox)){
             System.out.println("boatdown!!!!!!!");
         }
     }
@@ -156,9 +163,12 @@ public class BasicGameApp implements Runnable {
 		g.drawImage(Fishpic, Fish1.xpos, Fish1.ypos, Fish1.width, Fish1.height, null);
         g.drawImage(boatpic, boat1.xpos, boat1.ypos,boat1.width, boat1.height, null);
         g.drawImage(octopic, octo.xpos, octo.ypos,octo.width, octo.height, null);
-        g.drawImage(octobody, octo.xpos-25, octo.ypos+octo.height+10,100, -100, null);
-
-
+        g.drawImage(octobody, octohead.xpos, octohead.ypos, octohead.width, octohead.height, null);
+        g.setColor(Color.PINK);
+        g.drawRect(octohead.hitbox.x, octohead.hitbox.y,octohead.hitbox.width, octohead.hitbox.height);
+        g.drawRect(boat1.hitbox.x, boat1.hitbox.y,boat1.hitbox.width, boat1.hitbox.height);
+        System.out.println(octohead.hitbox.width);
+        System.out.println(octohead.hitbox.height);
 		g.dispose();
 
 		bufferStrategy.show();

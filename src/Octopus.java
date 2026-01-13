@@ -30,7 +30,7 @@ public class Octopus {
             width = 60;
             height = -450;
             isAlive = true;
-            hitbox = new Rectangle (xpos, ypos+height+10, 100, -100);
+            hitbox = new Rectangle (xpos, ypos, width, height);
 
         } // constructor
 
@@ -43,13 +43,13 @@ public class Octopus {
             if (xpos -width < 0){
                 dx = -dx;
             }
-            height = height + dy;
             if (height < -650){
                 dy = -dy;
             }
             if (height > -400){
                 dy = -dy;
             }
+            hitbox = new Rectangle(xpos, ypos, width, height);
 
 
 

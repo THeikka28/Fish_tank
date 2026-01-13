@@ -22,7 +22,7 @@ public class boat {
             ypos = pYpos;
             dx =5;
             dy =0;
-            width = -180;
+            width = 180;
             height = 100;
             isAlive = true;
             hitbox = new Rectangle(xpos, ypos, width, height);
@@ -36,6 +36,7 @@ public class boat {
             if (xpos > 1000-width){
                 xpos = 0;
             }
+            hitbox = new Rectangle(xpos, ypos, width, height);
 
         }
     }

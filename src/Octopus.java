@@ -3,7 +3,6 @@ import java.awt.*;
 public class Octopus {
 
 
-        public String name;                //holds the name of the hero
         public int xpos;                //the x position
         public int ypos;                //the y position
         public int dx;                    //the speed of the hero in the x direction
@@ -12,6 +11,11 @@ public class Octopus {
         public int height;
         public boolean isAlive;//a boolean to denote if the hero is alive or dead.
         public Rectangle hitbox;
+        public boolean iscrashing;
+        public int health;
+        public int totalhealth;
+        public int strength;
+
 
 
         // METHOD DEFINITION SECTION
@@ -30,6 +34,12 @@ public class Octopus {
             width = 60;
             height = -450;
             isAlive = true;
+            iscrashing = false;
+            health =  (int)(Math.random() * 400)+100;
+            totalhealth = health;
+            strength = (int)(Math.random() * 100)+20;
+
+
             hitbox = new Rectangle (xpos, ypos, width, height);
 
         } // constructor
@@ -50,6 +60,9 @@ public class Octopus {
                 dy = -dy;
             }
             hitbox = new Rectangle(xpos, ypos, width, height);
+            if(health<0){
+                isAlive = false;
+            }
 
 
 

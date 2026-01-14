@@ -11,6 +11,10 @@ public class boat {
         public int height;
         public boolean isAlive;
         public Rectangle hitbox;
+        public boolean iscrashing;
+        public int health;
+        public int totalhealth;
+        public int strength;
 
 
 
@@ -26,6 +30,10 @@ public class boat {
             height = 100;
             isAlive = true;
             hitbox = new Rectangle(xpos, ypos, width, height);
+            iscrashing = false;
+            health =  (int)(Math.random() * 400)+100;
+            totalhealth = health;
+            strength = (int)(Math.random() * 100)+20;
 
         } // constructor
 
@@ -37,7 +45,9 @@ public class boat {
                 xpos = 0;
             }
             hitbox = new Rectangle(xpos, ypos, width, height);
-
+            if(health<0){
+                isAlive = false;
+            }
         }
     }
 

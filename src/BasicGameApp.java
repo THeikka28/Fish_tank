@@ -73,9 +73,9 @@ public class BasicGameApp implements Runnable {
         octopic = Toolkit.getDefaultToolkit().getImage("Octo.png"); //load the picture
         octobody = Toolkit.getDefaultToolkit().getImage("octobody.png"); //load the picture
         background = Toolkit.getDefaultToolkit().getImage("fishback.jpeg"); //load the picture
-		Fish1 = new Fish(0,350);
-        boat1 = new boat(890, 100);
-        octo = new Octopus(220,750);
+		Fish1 = new Fish((int)(Math.random() * 600),350);
+        boat1 = new boat((int)(Math.random() * 400)+100, 100);
+        octo = new Octopus((int)(Math.random() * 700)+100,750);
         octohead = new Octopus (octo.xpos-25, octo.ypos+octo.height+10);
         octohead.width = 100;
         octohead.height = 100;
@@ -119,13 +119,19 @@ public class BasicGameApp implements Runnable {
             boat1.iscrashing = true;
             if(coinflip == 0){
                 boat1.health = boat1.health-octo.strength;
+                if(boat1.health<0){
+                    boat1.isAlive = false;
+                }
+                System.out.println("boat is " + boat1.isAlive);
             }
             if(coinflip == 1){
                octohead.health = octohead.health-boat1.strength;
+                if(octohead.health<0){
+                    octohead.isAlive = false;
+                }
+                System.out.println("octo is " + octohead.isAlive);
             }
-            System.out.println(coinflip);
-            System.out.println("octopus has "+ octohead.health);
-            System.out.println("boat has " + boat1.health);
+
         }
         if(!boat1.hitbox.intersects(octohead.hitbox)){
             boat1.iscrashing = false;
@@ -180,18 +186,20 @@ public class BasicGameApp implements Runnable {
 		g.clearRect(0, 0, WIDTH, HEIGHT);
         g.drawImage(background, 0, 0, WIDTH, HEIGHT, null);
 		g.drawImage(Fishpic, Fish1.xpos, Fish1.ypos, Fish1.width, Fish1.height, null);
-           if(boat1.isAlive = true) {
-               g.drawImage(boatpic, boat1.xpos, boat1.ypos, boat1.width, boat1.height, null);
-           }
-           if(octohead.isAlive = true) {
-               g.drawImage(octopic, octo.xpos, octo.ypos, octo.width, octo.height, null);
-               g.drawImage(octobody, octohead.xpos, octohead.ypos, octohead.width, octohead.height, null);
-           }
+        g.drawImage(boatpic, boat1.xpos, boat1.ypos, boat1.width, boat1.height, null);
+        g.drawImage(octopic, octo.xpos, octo.ypos, octo.width, octo.height, null);
+        if(octohead.isAlive == true) {
+            g.drawImage(octobody, octohead.xpos, octohead.ypos, octohead.width, octohead.height, null);
+        }
+        g.setColor(Color.white);
+        g.fillRect(boat1.xpos, boat1.ypos-20,boat1.totalhealth/2,20);
+        g.fillRect(octohead.xpos, octohead.ypos-20,octohead.totalhealth/2,20);
         g.setColor(Color.red);
-        g.drawRect(octohead.hitbox.x, octohead.hitbox.y,octohead.hitbox.width, octohead.hitbox.height);
-        g.drawRect(boat1.hitbox.x, boat1.hitbox.y,boat1.hitbox.width, boat1.hitbox.height);
         g.fillRect(boat1.xpos, boat1.ypos-20,boat1.health/2,20);
         g.fillRect(octohead.xpos, octohead.ypos-20,octohead.health/2,20);
+        g.setColor(Color.black);
+        g.drawString("HEALTH: " + octohead.health + "/" + octohead.totalhealth, octohead.xpos, octohead.ypos-20);
+        g.drawString("HEALTH: " + boat1.health + "/" + boat1.totalhealth, boat1.xpos, boat1.ypos-20);
 
 		g.dispose();
 

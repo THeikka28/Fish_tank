@@ -6,13 +6,15 @@ public class Fish {
         public int ypos;                //the y position
         public int dx;                    //the speed of the hero in the x direction
         public int dy;                    //the speed of the hero in the y direction
-       public int gxpos;                //the x position
+        public int gxpos;
+        public boolean isguncrashing;//the x position
         public int gypos;                //the y position
         public int gdx;                    //the speed of the hero in the x direction
         public int gdy;                    //the speed of the hero in the y direction
         public int width;
         public int height;
         public int health;
+        public int totalhealth;
         public int strength;
         public Rectangle hitbox;
         public Rectangle shoothitbox;
@@ -34,9 +36,13 @@ public class Fish {
             gdx = dx*2;
             gdy = dy;
             iscrashing = false;
+            isguncrashing = false;
+            isAlive = true;
+
             gxpos = xpos+100;
             gypos = ypos+30;
             health =  (int)(Math.random() * 400)+100;
+            totalhealth = health;
             strength = (int)(Math.random() * 100)+20;
             bounces = (int)(Math.random()*5)+1;
             initialbounce = bounces;
@@ -64,6 +70,10 @@ public class Fish {
             }
             if (isAlive == true) {
                 hitbox = new Rectangle(xpos, ypos, width, height);
+            }
+            else
+            {
+                hitbox = new Rectangle(2000,2000,10,10);
             }
 
 

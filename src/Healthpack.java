@@ -1,6 +1,7 @@
 import java.awt.*;
 
-public class Octopus {
+public class Healthpack {
+
 
 
         public int xpos;                //the x position
@@ -11,10 +12,9 @@ public class Octopus {
         public int height;
         public boolean isAlive;//a boolean to denote if the hero is alive or dead.
         public Rectangle hitbox;
-        public boolean iscrashing;
-        public int health;
-        public int totalhealth;
-        public int strength;
+        public int heal;
+        public int boost;
+
 
 
 
@@ -26,18 +26,16 @@ public class Octopus {
 
         //This is a SECOND constructor that takes 3 parameters.  This allows us to specify the hero's name and position when we build it.
         // if you put in a String, an int and an int the program will use this constructor instead of the one above.
-        public Octopus (int pXpos, int pYpos) {
+        public Healthpack (int pXpos, int pYpos) {
             xpos = pXpos;
             ypos = pYpos;
-            dx =-2;
-            dy =-3;
+            dx =-1;
+            dy =-1;
             width = 60;
-            height = -450;
+            height = -60;
             isAlive = true;
-            iscrashing = false;
-            health =  (int)(Math.random() * 400)+100;
-            totalhealth = health;
-            strength = (int)(Math.random() * 100)+20;
+            heal = (int) (Math.random()*100)+50;
+            boost = (int) (Math.random()*50)+20;
 
 
             hitbox = new Rectangle (xpos, ypos, width, height);
@@ -62,13 +60,9 @@ public class Octopus {
             if (isAlive == true) {
                 hitbox = new Rectangle(xpos, ypos, width, height);
             }
-            else
-            {
+            else {
                 hitbox = new Rectangle(2000,2000,10,10);
             }
-
-
-
 
         }
     }

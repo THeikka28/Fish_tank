@@ -48,8 +48,14 @@ public class boat {
             if(health<0){
                 isAlive = false;
             }
+            else
+            {
+                hitbox = new Rectangle(2000,2000,10,10);
+            }
         }
-    }
+
+
+}
 
 
 

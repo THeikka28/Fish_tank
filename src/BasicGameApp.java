@@ -43,6 +43,7 @@ public class BasicGameApp implements Runnable {
     public Image background;
     public Image octopic;
     public Image octobody;
+    public Image explosion;
 
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
@@ -73,6 +74,7 @@ public class BasicGameApp implements Runnable {
         octopic = Toolkit.getDefaultToolkit().getImage("Octo.png"); //load the picture
         octobody = Toolkit.getDefaultToolkit().getImage("octobody.png"); //load the picture
         background = Toolkit.getDefaultToolkit().getImage("fishback.jpeg"); //load the picture
+        explosion = Toolkit.getDefaultToolkit().getImage("explosion.gif");
 		Fish1 = new Fish((int)(Math.random() * 600),350);
         boat1 = new boat((int)(Math.random() * 400)+100, 100);
         octo = new Octopus((int)(Math.random() * 700)+100,750);
@@ -111,30 +113,50 @@ public class BasicGameApp implements Runnable {
         octohead.ypos = octo.ypos+octo.height-90;
         octohead.hitbox.x = octohead.xpos;
         octohead.hitbox.y = octohead.ypos;
+        Fish1.shoot();
 
 	}
     public void crashing(){
-        if (boat1.hitbox.intersects(octohead.hitbox) && boat1.iscrashing == false){
+        if (boat1.hitbox.intersects(octohead.hitbox) && boat1.iscrashing == false && octo.iscrashing == false){
             coinflip = (int)(Math.random() * 2);
             boat1.iscrashing = true;
+            octo.iscrashing = true;
             if(coinflip == 0){
-                boat1.health = boat1.health-octo.strength;
+                boat1.health = boat1.health-octohead.strength;
                 if(boat1.health<0){
                     boat1.isAlive = false;
                 }
-                System.out.println("boat is " + boat1.isAlive);
             }
             if(coinflip == 1){
                octohead.health = octohead.health-boat1.strength;
                 if(octohead.health<0){
                     octohead.isAlive = false;
                 }
-                System.out.println("octo is " + octohead.isAlive);
             }
 
         }
-        if(!boat1.hitbox.intersects(octohead.hitbox)){
+
+        if(!boat1.hitbox.intersects(octohead.hitbox) && !boat1.hitbox.intersect(Fish1.shoothitbox){
             boat1.iscrashing = false;
+
+        }
+
+    }
+
+    if (boat1.hitbox.intersects(Fish1.shoothitbox) && boat1.iscrashing == false && Fish1.iscrashing == false){
+        coinflip = (int)(Math.random() * 2);
+        boat1.iscrashing = true;
+        if(coinflip == 0){
+            boat1.health = boat1.health-Fish1.strength;
+            if(boat1.health<0){
+                boat1.isAlive = false;
+            }
+        }
+        if(coinflip == 1){
+            Fish1.health = Fish1.health-boat1.strength;
+            if(Fish1.health<0){
+                Fish1.isAlive = false;
+            }
         }
 
     }
@@ -175,8 +197,6 @@ public class BasicGameApp implements Runnable {
       canvas.createBufferStrategy(2);
       bufferStrategy = canvas.getBufferStrategy();
       canvas.requestFocus();
-      System.out.println("DONE graphic setup");
-   
    }
 
 
@@ -186,20 +206,45 @@ public class BasicGameApp implements Runnable {
 		g.clearRect(0, 0, WIDTH, HEIGHT);
         g.drawImage(background, 0, 0, WIDTH, HEIGHT, null);
 		g.drawImage(Fishpic, Fish1.xpos, Fish1.ypos, Fish1.width, Fish1.height, null);
-        g.drawImage(boatpic, boat1.xpos, boat1.ypos, boat1.width, boat1.height, null);
-        g.drawImage(octopic, octo.xpos, octo.ypos, octo.width, octo.height, null);
-        if(octohead.isAlive == true) {
-            g.drawImage(octobody, octohead.xpos, octohead.ypos, octohead.width, octohead.height, null);
+        g.fillRect(Fish1.shoothitbox.x,Fish1.shoothitbox.y,20,20);
+
+        if(boat1.isAlive == true){
+            g.drawImage(boatpic, boat1.xpos, boat1.ypos, boat1.width, boat1.height, null);
+            g.setColor(Color.white);
+            g.fillRect(boat1.xpos, boat1.ypos-20,boat1.totalhealth/2,20);
+            g.setColor(Color.red);
+            g.fillRect(boat1.xpos, boat1.ypos-20,boat1.health/2,20);
+            g.setColor(Color.black);
+            g.drawString("HEALTH: " + boat1.health + "/" + boat1.totalhealth, boat1.xpos, boat1.ypos-40);
+            g.drawString("STRENGTH: " + boat1.strength, boat1.xpos, boat1.ypos-20);
         }
-        g.setColor(Color.white);
-        g.fillRect(boat1.xpos, boat1.ypos-20,boat1.totalhealth/2,20);
-        g.fillRect(octohead.xpos, octohead.ypos-20,octohead.totalhealth/2,20);
-        g.setColor(Color.red);
-        g.fillRect(boat1.xpos, boat1.ypos-20,boat1.health/2,20);
-        g.fillRect(octohead.xpos, octohead.ypos-20,octohead.health/2,20);
-        g.setColor(Color.black);
-        g.drawString("HEALTH: " + octohead.health + "/" + octohead.totalhealth, octohead.xpos, octohead.ypos-20);
-        g.drawString("HEALTH: " + boat1.health + "/" + boat1.totalhealth, boat1.xpos, boat1.ypos-20);
+
+        if(octohead.isAlive == true) {
+            g.drawImage(octopic, octo.xpos, octo.ypos, octo.width, octo.height, null);
+            g.drawImage(octobody, octohead.xpos, octohead.ypos, octohead.width, octohead.height, null);
+            g.setColor(Color.white);
+            g.fillRect(octohead.xpos, octohead.ypos-20,octohead.totalhealth/2,20);
+            g.setColor(Color.red);
+            g.fillRect(octohead.xpos, octohead.ypos-20,octohead.health/2,20);
+            g.setColor(Color.black);
+            g.drawString("HEALTH: " + octohead.health + "/" + octohead.totalhealth , octohead.xpos, octohead.ypos-40);
+            g.drawString("STRENGTH: " + octohead.strength, octohead.xpos, octohead.ypos-20);
+        }
+        if (octohead.isAlive == true && boat1.isAlive ==false)
+        {
+
+            g.drawImage(explosion,0,0,1000,700,null);
+            g.setColor(Color.white);
+            g.drawString("Octopus Wins!!!!",475,350);
+        }
+        if (octohead.isAlive == false && boat1.isAlive ==true)
+        {
+            g.drawImage(explosion,0,0,1000,700,null);
+            g.setColor(Color.white);
+            g.drawString("BOAT WINS!!!!",475,350);
+        }
+
+
 
 		g.dispose();
 

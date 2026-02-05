@@ -59,7 +59,9 @@ public class Octopus {
             if (height > -350){
                 dy = -dy;
             }
-            hitbox = new Rectangle(xpos, ypos, width, height);
+            if (isAlive == true) {
+                hitbox = new Rectangle(xpos, ypos, width, height);
+            }
 
 
 

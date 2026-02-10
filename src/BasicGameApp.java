@@ -38,7 +38,6 @@ public class BasicGameApp implements Runnable {
    public JPanel panel;
    
 	public BufferStrategy bufferStrategy;
-	public Image Fishpic;
     public Image boatpic;
     public Image background;
     public Image octopic;
@@ -51,7 +50,8 @@ public class BasicGameApp implements Runnable {
     private boat boat1;
     private Octopus octo;
     private Octopus octohead;
-    private Healthpack heal;
+    private Healthpack snack;
+    private Healthpack snack1;
     public int coinflip;
 
 
@@ -70,7 +70,6 @@ public class BasicGameApp implements Runnable {
        
       //variable and objects
       //create (construct) the objects needed for the game and load up 
-		Fishpic = Toolkit.getDefaultToolkit().getImage("Fish.png"); //load the picture
         boatpic = Toolkit.getDefaultToolkit().getImage("boat.png"); //load the picture
         octopic = Toolkit.getDefaultToolkit().getImage("Octo.png"); //load the picture
         octobody = Toolkit.getDefaultToolkit().getImage("octobody.png"); //load the picture
@@ -79,7 +78,8 @@ public class BasicGameApp implements Runnable {
 		Fish1 = new Fish((int)(Math.random() * 600),350);
         boat1 = new boat((int)(Math.random() * 400)+100, 100);
         octo = new Octopus((int)(Math.random() * 700)+100,750);
-        heal = new Healthpack ((int)(Math.random() * 700)+100,350);
+        snack = new Healthpack ((int)(Math.random() * 700)+100,(int) (Math.random()*400)+70, -2, 50);
+        snack1 = new Healthpack ((int)(Math.random() * 700)+100, (int) (Math.random()*400)+70, 1,75);
         octohead = new Octopus (octo.xpos-25, octo.ypos+octo.height+10);
         octohead.width = 100;
         octohead.height = 100;
@@ -109,7 +109,8 @@ public class BasicGameApp implements Runnable {
 		Fish1.move();
         boat1.move();
         octo.move();
-        heal.move();
+        snack.move();
+        snack1.move();
         Fish1.shoot();
         octo.height = octo.height + octo.dy;
         crashing();
@@ -121,24 +122,25 @@ public class BasicGameApp implements Runnable {
 	}
     public void crashing(){
 
-        if(!boat1.hitbox.intersects(octohead.hitbox) && !boat1.hitbox.intersects(Fish1.shoothitbox)  && !boat1.hitbox.intersects(Fish1.hitbox)){
+        if(!boat1.hitbox.intersects(octohead.hitbox) && !boat1.hitbox.intersects(snack1.hitbox) && !boat1.hitbox.intersects(snack.hitbox) && !boat1.hitbox.intersects(Fish1.shoothitbox)  && !boat1.hitbox.intersects(Fish1.hitbox)){
             boat1.iscrashing = false;
         }
-        if(!octohead.hitbox.intersects(boat1.hitbox) && !octohead.hitbox.intersects(Fish1.shoothitbox)  && !octohead.hitbox.intersects(Fish1.hitbox)){
-            boat1.iscrashing = false;
+        if(!octohead.hitbox.intersects(boat1.hitbox) && !octohead.hitbox.intersects(snack.hitbox) && !octohead.hitbox.intersects(snack1.hitbox) && !octohead.hitbox.intersects(Fish1.shoothitbox)  && !octohead.hitbox.intersects(Fish1.hitbox)){
+        octohead.iscrashing = false;
         }
-        if(!Fish1.hitbox.intersects(octohead.hitbox) && !Fish1.hitbox.intersects(Fish1.hitbox)){
-            boat1.iscrashing = false;
+        if(!Fish1.hitbox.intersects(octohead.hitbox) && !Fish1.hitbox.intersects(boat1.hitbox) && !Fish1.hitbox.intersects(snack1.hitbox) && !Fish1.hitbox.intersects(snack.hitbox)){
+            Fish1.iscrashing = false;
         }
         if(!Fish1.shoothitbox.intersects(octohead.hitbox) && !Fish1.shoothitbox.intersects(boat1.hitbox)){
-            boat1.iscrashing = false;
+            Fish1.isguncrashing = false;
         }
 
 
-        if (boat1.hitbox.intersects(octohead.hitbox) && boat1.iscrashing == false && octo.iscrashing == false){
+
+        if (boat1.hitbox.intersects(octohead.hitbox) && boat1.iscrashing == false && octohead.iscrashing == false){
             coinflip = (int)(Math.random() * 2);
             boat1.iscrashing = true;
-            octo.iscrashing = true;
+            octohead.iscrashing = true;
             if(coinflip == 0){
                 boat1.health = boat1.health-octohead.strength;
                 if(boat1.health<0){
@@ -156,94 +158,104 @@ public class BasicGameApp implements Runnable {
 
 
         if(boat1.hitbox.intersects(Fish1.shoothitbox) && boat1.iscrashing == false && Fish1.isguncrashing == false){
-            coinflip = (int)(Math.random() * 2);
             boat1.iscrashing = true;
             Fish1.isguncrashing = true;
-            if(coinflip == 0){
+
                 boat1.health = boat1.health-Fish1.strength;
-                if(boat1.health<0){
+                if(boat1.health<0)
+                {
                     boat1.isAlive = false;
                 }
-            }
 
         }
 
 
 
         if(octohead.hitbox.intersects(Fish1.shoothitbox) && octohead.iscrashing == false && Fish1.isguncrashing == false){
-            coinflip = (int)(Math.random() * 2);
             octohead.iscrashing = true;
             Fish1.iscrashing = true;
-            if(coinflip == 0){
                 octohead.health = octohead.health-Fish1.strength;
-                if(octohead.health<0){
+                if(octohead.health<0)
+                {
                     octohead.isAlive = false;
                 }
-            }
 
         }
 
 
         if(octohead.hitbox.intersects(Fish1.hitbox) && octohead.iscrashing == false && Fish1.iscrashing == false){
-            coinflip = (int)(Math.random() * 2);
             octohead.iscrashing = true;
             Fish1.iscrashing = true;
-            if(coinflip == 0){
-              Fish1.health = Fish1.health-octohead.strength;
-                if(Fish1.health<0){
-                    Fish1.isAlive = false;
-                }
+            Fish1.health = Fish1.health-octohead.strength;
+            if(Fish1.health<0)
+            {
+                Fish1.isAlive = false;
             }
 
         }
 
 
         if(boat1.hitbox.intersects(Fish1.hitbox) && boat1.iscrashing == false && Fish1.iscrashing == false){
-            coinflip = (int)(Math.random() * 2);
             boat1.iscrashing = true;
             Fish1.iscrashing = true;
-            if(coinflip == 0){
                 Fish1.health = Fish1.health-boat1.strength;
-                if(Fish1.health<0){
+                if(Fish1.health<0)
+                {
                     Fish1.isAlive = false;
                 }
-            }
 
         }
 
 
-        if(boat1.hitbox.intersects(heal.hitbox))
+        if(boat1.hitbox.intersects(snack.hitbox) && boat1.iscrashing == false)
         {
-            coinflip = (int) (Math.random()*2);
-            if (coinflip == 0)
-            {
-                boat1.health = boat1.health + heal.heal;
-            }
-            else{
-                boat1.strength = boat1.strength+heal.boost;
-            }
+                boat1.health = boat1.health + snack.heal;
+                boat1.strength = boat1.strength+snack.boost;
+                boat1.iscrashing = true;
+
         }
-        if(octohead.hitbox.intersects(heal.hitbox))
+
+        if(boat1.hitbox.intersects(snack1.hitbox)&& boat1.iscrashing == false)
         {
-            coinflip = (int) (Math.random()*2);
-            if (coinflip == 0)
-            {
-                octohead.health = boat1.health + heal.heal;
-            }
-            else{
-                octohead.strength = boat1.strength+heal.boost;
-            }
+            boat1.health = boat1.health + snack1.heal;
+            boat1.strength = boat1.strength+snack1.boost;
+            boat1.iscrashing = true;
+
         }
-        if(Fish1.hitbox.intersects(heal.hitbox))
+
+
+        if(octohead.hitbox.intersects(snack.hitbox) && octohead.iscrashing == false)
         {
-            coinflip = (int) (Math.random()*2);
-            if (coinflip == 0)
-            {
-                Fish1.health = boat1.health + heal.heal;
-            }
-            else{
-                Fish1.strength = boat1.strength+heal.boost;
-            }
+                octohead.health = octohead.health + snack.heal;
+                octohead.strength = octohead.strength+snack.boost;
+                octohead.iscrashing = true;
+
+
+        }
+
+        if(octohead.hitbox.intersects(snack1.hitbox)&& octohead.iscrashing == false)
+        {
+            octohead.health = octohead.health + snack1.heal;
+            octohead.strength = octohead.strength+snack1.boost;
+            octohead.iscrashing = true;
+        }
+
+
+        if(Fish1.hitbox.intersects(snack.hitbox) && Fish1.iscrashing == false)
+        {
+
+                Fish1.health = Fish1.health + snack.heal;
+                Fish1.strength = Fish1.strength+snack.boost;
+                Fish1.iscrashing = true;
+        }
+
+        if(Fish1.hitbox.intersects(snack1.hitbox)&& Fish1.iscrashing == false)
+        {
+
+            Fish1.health = Fish1.health + snack1.heal;
+            Fish1.strength = Fish1.strength+snack1.boost;
+            Fish1.iscrashing = true;
+
         }
 
     }
@@ -294,7 +306,27 @@ public class BasicGameApp implements Runnable {
 		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
 		g.clearRect(0, 0, WIDTH, HEIGHT);
         g.drawImage(background, 0, 0, WIDTH, HEIGHT, null);
-		if (Fish1.isAlive) {
+        if (snack.isAlive == true) {
+            g.setColor(Color.green);
+            g.fillRect(snack.hitbox.x, snack.hitbox.y, snack.hitbox.width, snack.hitbox.height);
+            g.setColor(Color.black);
+            g.drawString("HEALS ON IMPACT: " + snack.heal, snack.xpos, snack.ypos-40);
+            g.drawString("STRENGTHENS ON IMPACT: " + snack.boost, snack.xpos, snack.ypos-20);
+            g.drawString("USES: " + snack.uses + "/3", snack.xpos, snack.ypos-60);
+            g.drawRect(snack.hitbox.x, snack.hitbox.y, snack.hitbox.width, snack.hitbox.height);
+
+        }
+        if (snack1.isAlive == true) {
+            g.setColor(Color.green);
+            g.fillRect(snack1.hitbox.x, snack1.hitbox.y, snack1.hitbox.width, snack1.hitbox.height);
+            g.setColor(Color.black);
+            g.drawString("HEALS ON IMPACT: " + snack1.heal, snack1.xpos, snack1.ypos-40);
+            g.drawString("STRENGTHENS ON IMPACT: " + snack1.boost, snack1.xpos, snack1.ypos-20);
+            g.drawString("USES: " + snack1.uses + "/3", snack1.xpos, snack1.ypos-60);
+            g.drawRect(snack1.hitbox.x, snack1.hitbox.y, snack1.hitbox.width, snack1.hitbox.height);
+
+        }
+		if (Fish1.isAlive == true) {
             g.setColor(Color.white);
             g.fillRect(Fish1.xpos, Fish1.ypos-20,Fish1.totalhealth/2,20);
             g.setColor(Color.red);
@@ -303,6 +335,9 @@ public class BasicGameApp implements Runnable {
             g.drawString("HEALTH: " + Fish1.health + "/" + Fish1.totalhealth, Fish1.xpos, Fish1.ypos-40);
             g.drawString("STRENGTH: " + Fish1.strength, Fish1.xpos, Fish1.ypos-20);
             g.fillRect(Fish1.shoothitbox.x, Fish1.shoothitbox.y, 20, 20);
+            g.drawImage(Fish1.Fishpic, Fish1.xpos, Fish1.ypos, Fish1.width, Fish1.height, null);
+            g.drawRect(Fish1.hitbox.x, Fish1.hitbox.y, Fish1.hitbox.width, Fish1.hitbox.height);
+
         }
 
         if(boat1.isAlive == true){
@@ -314,6 +349,8 @@ public class BasicGameApp implements Runnable {
             g.setColor(Color.black);
             g.drawString("HEALTH: " + boat1.health + "/" + boat1.totalhealth, boat1.xpos, boat1.ypos-40);
             g.drawString("STRENGTH: " + boat1.strength, boat1.xpos, boat1.ypos-20);
+            g.drawRect(boat1.hitbox.x, boat1.hitbox.y, boat1.hitbox.width, boat1.hitbox.height);
+
         }
 
         if(octohead.isAlive == true) {
@@ -326,22 +363,28 @@ public class BasicGameApp implements Runnable {
             g.setColor(Color.black);
             g.drawString("HEALTH: " + octohead.health + "/" + octohead.totalhealth , octohead.xpos, octohead.ypos-40);
             g.drawString("STRENGTH: " + octohead.strength, octohead.xpos, octohead.ypos-20);
+            g.drawRect(octohead.hitbox.x, octohead.hitbox.y, octohead.hitbox.width, octohead.hitbox.height);
         }
-        if (octohead.isAlive == true && boat1.isAlive ==false)
+        if (octohead.isAlive == true && boat1.isAlive ==false && Fish1.isAlive == false)
         {
 
             g.drawImage(explosion,0,0,1000,700,null);
             g.setColor(Color.white);
             g.drawString("Octopus Wins!!!!",475,350);
         }
-        if (octohead.isAlive == false && boat1.isAlive ==true)
+        if (octohead.isAlive == false && boat1.isAlive ==true && Fish1.isAlive == false)
         {
             g.drawImage(explosion,0,0,1000,700,null);
             g.setColor(Color.white);
             g.drawString("BOAT WINS!!!!",475,350);
         }
+        if (octohead.isAlive == false && boat1.isAlive ==false && Fish1.isAlive == true)
+        {
 
-
+            g.drawImage(explosion,0,0,1000,700,null);
+            g.setColor(Color.white);
+            g.drawString("FISH WINSs!!!!",475,350);
+        }
 
 		g.dispose();
 

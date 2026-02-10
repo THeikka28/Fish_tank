@@ -44,9 +44,9 @@ public class boat {
             if (xpos > 1000-width){
                 xpos = 0;
             }
-            hitbox = new Rectangle(xpos, ypos, width, height);
-            if(health<0){
-                isAlive = false;
+            if(isAlive == true){
+                hitbox = new Rectangle(xpos, ypos, width, height);
+
             }
             else
             {

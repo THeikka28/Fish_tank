@@ -21,6 +21,7 @@ public class Fish {
         public int bounces;
         public int initialbounce;
         public boolean iscrashing;
+        public Image Fishpic;
 
 
     public boolean isAlive;
@@ -38,7 +39,6 @@ public class Fish {
             iscrashing = false;
             isguncrashing = false;
             isAlive = true;
-
             gxpos = xpos+100;
             gypos = ypos+30;
             health =  (int)(Math.random() * 400)+100;
@@ -46,6 +46,8 @@ public class Fish {
             strength = (int)(Math.random() * 100)+20;
             bounces = (int)(Math.random()*5)+1;
             initialbounce = bounces;
+            Fishpic = Toolkit.getDefaultToolkit().getImage("Fish.png"); //load the picture
+
 
 
         }
@@ -61,11 +63,14 @@ public class Fish {
             }
             if(xpos + width >1000){
                 dx = -dx;
-                width = -width;
+                Fishpic = Toolkit.getDefaultToolkit().getImage("Fish2.png"); //load the picture
+
+
             }
             if(xpos + width< 0){
                 dx = -dx;
-                width = -width;
+                Fishpic = Toolkit.getDefaultToolkit().getImage("Fish.png"); //load the picture
+
 
             }
             if (isAlive == true) {

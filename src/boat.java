@@ -17,10 +17,6 @@ public class boat {
         public int strength;
 
 
-
-
-        //This is a SECOND constructor that takes 3 parameters.  This allows us to specify the hero's name and position when we build it.
-        // if you put in a String, an int and an int the program will use this constructor instead of the one above.
         public boat(int pXpos, int pYpos) {
             xpos = pXpos;
             ypos = pYpos;
@@ -31,6 +27,7 @@ public class boat {
             isAlive = true;
             hitbox = new Rectangle(xpos, ypos, width, height);
             iscrashing = false;
+            //makes randomly generated stats
             health =  (int)(Math.random() * 400)+100;
             totalhealth = health;
             strength = (int)(Math.random() * 100)+20;
@@ -41,6 +38,7 @@ public class boat {
         public void move() {
             xpos = xpos + dx;
             ypos = ypos + dy;
+            //if statements make the boat wrap around the arena.
             if (xpos > 1000-width){
                 xpos = 0;
             }

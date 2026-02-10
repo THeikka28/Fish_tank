@@ -17,15 +17,6 @@ public class Octopus {
         public int strength;
 
 
-
-        // METHOD DEFINITION SECTION
-
-        // Constructor Definition
-        // A constructor builds the object when called and sets variable values.
-
-
-        //This is a SECOND constructor that takes 3 parameters.  This allows us to specify the hero's name and position when we build it.
-        // if you put in a String, an int and an int the program will use this constructor instead of the one above.
         public Octopus (int pXpos, int pYpos) {
             xpos = pXpos;
             ypos = pYpos;
@@ -35,7 +26,9 @@ public class Octopus {
             height = -450;
             isAlive = true;
             iscrashing = false;
+            //randomly generated stats
             health =  (int)(Math.random() * 400)+100;
+            //total health is used to store the maximum health to make a health bar that shows proportionally how much health it has left
             totalhealth = health;
             strength = (int)(Math.random() * 100)+20;
 
@@ -46,6 +39,7 @@ public class Octopus {
 
         //The move method.  Everytime this is run (or "called") the hero's x position and y position change by dx and dy
         public void move() {
+            //if statements create the streaching effect that the octopus is given
             xpos = xpos + dx;
             if (xpos+ width > 1000){
                 dx = -dx;
@@ -59,6 +53,7 @@ public class Octopus {
             if (height > -350){
                 dy = -dy;
             }
+            //teleports the octopus's hitbox outisde the arena if it dies;
             if (isAlive == true) {
                 hitbox = new Rectangle(xpos, ypos, width, height);
             }

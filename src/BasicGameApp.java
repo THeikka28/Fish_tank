@@ -92,13 +92,14 @@ public class BasicGameApp implements Runnable {
 
 	public void moveThings()
 	{
-      //calls the move( ) code in the object
+      //calls the move( ) code in the object so they boucne artoudn the screen
 		Fish1.move();
         boat1.move();
         octo.move();
         snack.move();
         snack1.move();
         Fish1.shoot();
+
         //makes octopus character because it is made of two separate objects the head is separate from the body
         octo.height = octo.height + octo.dy;
         octohead.xpos = octo.xpos-25;
@@ -112,22 +113,22 @@ public class BasicGameApp implements Runnable {
 	}
     public void crashing(){
 
-        //Ensures that the boat can only be hitting one thing at once
+        //Ensures that the boat can only be hitting one thing at once and makes it so collisions only happen the first frame they hit each other
         if(!boat1.hitbox.intersects(octohead.hitbox) && !boat1.hitbox.intersects(snack1.hitbox) && !boat1.hitbox.intersects(snack.hitbox) && !boat1.hitbox.intersects(Fish1.shoothitbox)  && !boat1.hitbox.intersects(Fish1.hitbox)){
             boat1.iscrashing = false;
         }
 
-        //Ensures that the octopus can only be hitting one thing at once
+        //Ensures that the octopus can only be hitting one thing at once  and makes it so collisions only happen the first frame they hit each other
         if(!octohead.hitbox.intersects(boat1.hitbox) && !octohead.hitbox.intersects(snack.hitbox) && !octohead.hitbox.intersects(snack1.hitbox) && !octohead.hitbox.intersects(Fish1.shoothitbox)  && !octohead.hitbox.intersects(Fish1.hitbox)){
         octohead.iscrashing = false;
         }
 
-        //Ensures that the fish can only be hitting one thing at once
+        //Ensures that the fish can only be hitting one thing at once and makes it so collisions only happen the first frame they hit each other
         if(!Fish1.hitbox.intersects(octohead.hitbox) && !Fish1.hitbox.intersects(boat1.hitbox) && !Fish1.hitbox.intersects(snack1.hitbox) && !Fish1.hitbox.intersects(snack.hitbox)){
             Fish1.iscrashing = false;
         }
 
-        //Ensures that the fish's projectiles can only be hitting one thing at once
+        //Ensures that the fish's projectiles can only be hitting one thing at once  and makes it so collisions only happen the first frame they hit each other
         if(!Fish1.shoothitbox.intersects(octohead.hitbox) && !Fish1.shoothitbox.intersects(boat1.hitbox)){
             Fish1.isguncrashing = false;
         }
@@ -141,6 +142,7 @@ public class BasicGameApp implements Runnable {
             //chooses if boat or octopus takes damage
             if(coinflip == 0){
                 boat1.health = boat1.health-octohead.strength;
+                //makes sure the boat dies if health is low
                 if(boat1.health<=0){
                     boat1.isAlive = false;
                 }
@@ -160,6 +162,7 @@ public class BasicGameApp implements Runnable {
             boat1.iscrashing = true;
             Fish1.isguncrashing = true;
                 boat1.health = boat1.health-Fish1.strength;
+                //makes sure boat dies is below 0
                 if(boat1.health<=0)
                 {
                     boat1.isAlive = false;
@@ -173,9 +176,11 @@ public class BasicGameApp implements Runnable {
             octohead.iscrashing = true;
             Fish1.iscrashing = true;
                 octohead.health = octohead.health-Fish1.strength;
+                //makes sure octupus dies if health is less than zero
                 if(octohead.health<=0)
                 {
                     octohead.isAlive = false;
+                    //teleports octopus hitbox outside of arena if it dies
                     octo.hitbox = new Rectangle(-1000,-1000,1,1);
                     octohead.hitbox = new Rectangle(1200,-1000,1,1);
                 }
@@ -187,6 +192,7 @@ public class BasicGameApp implements Runnable {
             octohead.iscrashing = true;
             Fish1.iscrashing = true;
             Fish1.health = Fish1.health-octohead.strength;
+            //checks if fish is alive on collision and sets it to false if it isn't
             if(Fish1.health<=0)
             {
                 Fish1.isAlive = false;
@@ -199,6 +205,7 @@ public class BasicGameApp implements Runnable {
             boat1.iscrashing = true;
             Fish1.iscrashing = true;
                 Fish1.health = Fish1.health-boat1.strength;
+                //kills fish if health is less than 0
                 if(Fish1.health<=0)
                 {
                     Fish1.isAlive = false;
@@ -258,6 +265,15 @@ public class BasicGameApp implements Runnable {
             Fish1.health = Fish1.health + snack1.heal;
             Fish1.strength = Fish1.strength+snack1.boost;
             Fish1.iscrashing = true;
+
+        }
+
+        //intersection between the two health packs, makes them bounce off of each other
+        if(snack.hitbox.intersects(snack1.hitbox)){
+            snack.dx = -snack.dx;
+            snack.dy = -snack.dy;
+            snack1.dx = -snack1.dx;
+            snack1.dy = -snack1.dy;
 
         }
 
@@ -398,6 +414,8 @@ public class BasicGameApp implements Runnable {
         //makes win screen for octopus if it is the only one alive
         if (octohead.isAlive == true && boat1.isAlive ==false && Fish1.isAlive == false)
         {
+            //pauses on after one of them wins so you can see it is only ocotpus alive before going to win screen
+
             pause(2000);
             g.drawImage(explosion,0,0,1000,700,null);
             g.setColor(Color.white);
@@ -407,7 +425,10 @@ public class BasicGameApp implements Runnable {
         //makes win screen for boat if it is the only one alive
         if (octohead.isAlive == false && boat1.isAlive ==true && Fish1.isAlive == false)
         {
+            //pauses on after one of them wins so you can see it is only boat alive before going to win screen
+
             pause(2000);
+
             g.drawImage(explosion,0,0,1000,700,null);
             g.setColor(Color.white);
             g.drawString("BOAT WINS!!!!",475,350);
@@ -416,6 +437,8 @@ public class BasicGameApp implements Runnable {
         //makes win screen for fish if it is the only one alive
         if (octohead.isAlive == false && boat1.isAlive ==false && Fish1.isAlive == true)
         {
+            //pauses after one of them wins so you can see it is only fish alive before going to win screen
+
             pause(2000);
             g.drawImage(explosion,0,0,1000,700,null);
             g.setColor(Color.white);

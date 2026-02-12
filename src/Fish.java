@@ -42,9 +42,9 @@ public class Fish {
             gxpos = xpos+100;
             gypos = ypos+30;
             //establishes random stats for the fish
-            health =  (int)(Math.random() * 400)+100;
+            health =  (int)(Math.random() * 500)+100;
             totalhealth = health;
-            strength = (int)(Math.random() * 100)+20;
+            strength = (int)(Math.random() * 150)+20;
             bounces = (int)(Math.random()*5)+1;
             //bounces is used to choose when the bulet is reset;
             initialbounce = bounces;

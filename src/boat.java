@@ -28,7 +28,7 @@ public class boat {
             hitbox = new Rectangle(xpos, ypos, width, height);
             iscrashing = false;
             //makes randomly generated stats
-            health =  (int)(Math.random() * 400)+100;
+            health =  (int)(Math.random() * 300)+100;
             totalhealth = health;
             strength = (int)(Math.random() * 100)+20;
 

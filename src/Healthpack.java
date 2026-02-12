@@ -44,7 +44,7 @@ public class Healthpack {
             if (xpos  < 0){
                 dx = -dx;
             }
-            if (ypos > 1000){
+            if (ypos > 700-height){
                 dy = -dy;
             }
             if (ypos < 70){

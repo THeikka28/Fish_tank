@@ -401,6 +401,8 @@ public class BasicGameApp implements Runnable {
             g.setColor(Color.black);
             g.drawString("HEALTH: " + octohead.health + "/" + octohead.totalhealth , octohead.xpos, octohead.ypos-40);
             g.drawString("STRENGTH: " + octohead.strength, octohead.xpos, octohead.ypos-20);
+            g.drawRect(octohead.hitbox.x, octohead.hitbox.y, octohead.hitbox.width, octohead.hitbox.height);
+
             //gives health above maximum from health pack a different color to show it had overheal;
 
             if (octohead.health>octohead.totalhealth)
@@ -408,7 +410,6 @@ public class BasicGameApp implements Runnable {
                 g.setColor(Color.CYAN);
                 g.fillRect(octohead.xpos+octohead.totalhealth/2, octohead.ypos-20,(octohead.health- boat1.totalhealth)/2,20);
             }
-            g.drawRect(octohead.hitbox.x, octohead.hitbox.y, octohead.hitbox.width, octohead.hitbox.height);
         }
 
         //makes win screen for octopus if it is the only one alive
